@@ -1,0 +1,29 @@
+package process;
+
+public class WorkerThread implements Runnable {
+
+	BankAccount account;
+	String user;
+	int amount;
+
+	public WorkerThread(BankAccount acc, String user, int amount) {
+		this.account = acc;
+		this.user = user;
+		this.amount = amount;
+	}
+
+	@Override
+	public void run() {
+
+		account.withdraw(amount, user);
+
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("Inside run() for " + user);
+	}
+}
+

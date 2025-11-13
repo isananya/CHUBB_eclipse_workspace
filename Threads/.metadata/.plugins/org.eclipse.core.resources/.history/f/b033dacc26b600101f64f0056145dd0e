@@ -1,0 +1,25 @@
+package process;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		BankAccount sharedAccount = new BankAccount(1000);
+
+		Thread t1 = new Thread(new WorkerThread(sharedAccount, "User A", 700));
+		Thread t2 = new Thread(new WorkerThread(sharedAccount, "User B", 500));
+
+		t1.start();
+		t2.start();
+
+//		try {
+//			t1.join();
+//			t2.join();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+
+		System.out.println("\nFinal balance: ₹" + sharedAccount.getBalance());
+	}
+}
+

@@ -1,0 +1,73 @@
+package comp;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+class BankAccount {
+    private String accountHolderName;
+    private long accountNumber;
+    private double balance;
+    private String country;
+
+    public BankAccount(String name, long accNo, double bal, String country) {
+        this.accountHolderName = name;
+        this.accountNumber = accNo;
+        this.balance = bal;
+        this.country = country;
+    }
+
+    public String getAccountHolderName() { return accountHolderName; }
+    public long getAccountNumber() { return accountNumber; }
+    public double getBalance() { return balance; }
+    public String getCountry() { return country; }
+
+    @Override
+    public String toString() {
+        return accountHolderName + " | " + accountNumber + " | " + balance + " | " + country;
+    }
+}
+
+class SortByBalance implements Comparator<BankAccount> {
+    public int compare(BankAccount a, BankAccount b) {
+        return Double.compare(a.getBalance(), b.getBalance());
+    }
+}
+
+class SortByAccountNumber implements Comparator<BankAccount> {
+    public int compare(BankAccount a, BankAccount b) {
+        return Long.compare(a.getAccountNumber(), b.getAccountNumber());
+    }
+}
+
+public class FundTransfer {
+    public static void main(String[] args) {
+        List<BankAccount> accounts = Arrays.asList(
+            new BankAccount("Ananya", 102345, 50000.75, "India"),
+            new BankAccount("Ravi", 101234, 150000.00, "India"),
+            new BankAccount("Meera", 103567, 75000.25, "USA"),
+            new BankAccount("Kiran", 100876, 25000.90, "UK")
+        );
+
+        System.out.println("Sort using Stream (by Balance ascending)");
+        List<BankAccount> sortedByBalanceStream = accounts.stream()
+                .sorted(Comparator.comparingDouble(BankAccount::getBalance))
+                .collect(Collectors.toList());
+        sortedByBalanceStream.forEach(System.out::println);
+
+        System.out.println("\nSort using Stream (by Account Number descending)");
+        List<BankAccount> sortedByAccNoDesc = accounts.stream()
+                .sorted(Comparator.comparingLong(BankAccount::getAccountNumber).reversed())
+                .collect(Collectors.toList());
+        sortedByAccNoDesc.forEach(System.out::println);
+
+        System.out.println("\nSort using Custom Comparator (by Balance ascending)");
+        List<BankAccount> sortedByBalanceCustom = new ArrayList<>(accounts);
+        Collections.sort(sortedByBalanceCustom, new SortByBalance());
+        sortedByBalanceCustom.forEach(System.out::println);
+
+        System.out.println("\nSort using Custom Comparator (by Account Number ascending)");
+        List<BankAccount> sortedByAccNoCustom = new ArrayList<>(accounts);
+        Collections.sort(sortedByAccNoCustom, new SortByAccountNumber());
+        sortedByAccNoCustom.forEach(System.out::println);
+    }
+}
