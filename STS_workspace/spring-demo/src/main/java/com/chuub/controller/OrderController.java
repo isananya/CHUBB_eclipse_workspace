@@ -1,0 +1,34 @@
+package com.chuub.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.chuub.request.*;
+import com.chuub.service.OrderService;
+
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RestController
+public class OrderController {
+	@Autowired
+	OrderService service;
+	@GetMapping("/order")
+	String getOrder() {
+		return "hello";
+	}
+	
+	@PostMapping("/order")
+	Order saveOrder(@RequestBody @Valid Order order) {
+//		log.debug("logger added");
+		service.insertOrder(order);
+		return order;
+	}
+//	float saveOrder(@RequestBody @Valid Order order) {
+//		return order.calculatePrice();
+//	}
+}
