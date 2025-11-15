@@ -23,7 +23,7 @@ public class OrderController {
 	}
 	
 	@PostMapping("/order")
-	Order saveOrder(@RequestBody @Valid Order order) {
+	Order1 saveOrder(@RequestBody @Valid Order1 order) {
 //		log.debug("logger added");
 		service.insertOrder(order);
 		return order;

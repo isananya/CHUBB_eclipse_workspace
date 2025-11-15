@@ -2,11 +2,25 @@ package com.chuub.request;
 
 import org.hibernate.validator.constraints.Range;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-public class Order {
+@Entity
+public class Order1 {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	int id;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	@NotBlank
 	private String item;
 	@Min(value=1)
@@ -14,13 +28,13 @@ public class Order {
 //	@Min(value=2, message="min quantity=2")
 	@Range(min=2,max=10)
 	private int quantity;
-	@Valid private Address address;
-	public Address getAddress() {
-		return address;
-	}
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+//	@Valid private Address address;
+//	public Address getAddress() {
+//		return address;
+//	}
+//	public void setAddress(Address address) {
+//		this.address = address;
+//	}
 	public int getQuantity() {
 		return quantity;
 	}
